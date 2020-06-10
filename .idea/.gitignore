@@ -1,0 +1,9 @@
+# git ignore list
+
+.DS_Store
+.git/
+.idea/
+__pycache__/
+*tmp/
+*scratch*
+*backup*
