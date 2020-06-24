@@ -1,0 +1,20 @@
+# git ignore list
+.DS_Store
+*venv*/
+*.pyc
+*.csv
+*.xlsx
+*reveries*
+*.npy
+*graphs/
+private/
+*checkpoints/
+*.pdf
+*.git
+*.idea*
+*__pycache__*
+
+
+
+*scratch.py
+

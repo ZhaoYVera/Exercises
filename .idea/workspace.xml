@@ -1,7 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="0eb8ac45-fa74-4d2c-8afb-94e08a0648ca" name="Default Changelist" comment="" />
+    <list default="true" id="0eb8ac45-fa74-4d2c-8afb-94e08a0648ca" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/dfs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/traversal/alpha_nearness.py" beforeDir="false" afterPath="$PROJECT_DIR$/traversal/alpha_nearness.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/traversal/search_for_d.py" beforeDir="false" afterPath="$PROJECT_DIR$/traversal/search_for_d.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/traversal/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/traversal/test.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,7 +40,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/Exercises" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1chqeA1L6LWe71ar7jrMNVIm8SU" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -27,16 +52,13 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/traversal/traversal.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/classic_lkh_zy/tsp_lkh/test.py" />
   </component>
-  <component name="RunManager" selected="Python.alpha_nearness">
+  <component name="RunManager" selected="Python.main">
     <configuration name="alpha_nearness" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="python_work" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/traversal" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -74,29 +96,26 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="mst_prim" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="python_work" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/traversal" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/classic_lkh_zy/tsp_lkh" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/traversal/mst_prim.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/classic_lkh_zy/tsp_lkh/main.py" />
       <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
       <option name="REDIRECT_INPUT" value="false" />
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="prim" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="search_for_d" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="python_work" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -109,7 +128,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/traversal/prim.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/traversal/search_for_d.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -140,13 +159,32 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="tour" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="python_work" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/classic_lkh_zy/tsp_lkh" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/classic_lkh_zy/tsp_lkh/tour.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.alpha_nearness" />
-        <item itemvalue="Python.alpha_nearness" />
-        <item itemvalue="Python.prim" />
-        <item itemvalue="Python.mst_prim" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.test" />
+        <item itemvalue="Python.search_for_d" />
       </list>
     </recent_temporary>
   </component>
@@ -167,11 +205,23 @@
       <workItem from="1591352555531" duration="228000" />
       <workItem from="1591578827297" duration="27705000" />
       <workItem from="1591773192099" duration="313000" />
+      <workItem from="1592460451298" duration="64477000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="WindowStateProjectService">
     <state x="175" y="115" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1591234385611">
@@ -182,42 +232,50 @@
       <screen x="0" y="0" width="1440" height="920" />
     </state>
     <state x="474" y="261" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.920@0.0.1440.920" timestamp="1591002905564" />
-    <state x="501" y="215" key="FileChooserDialogImpl" timestamp="1590991821352">
+    <state x="420" y="52" key="#search_for_d" timestamp="1592891478213">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state x="501" y="215" key="FileChooserDialogImpl/0.0.1440.920@0.0.1440.920" timestamp="1590991821352" />
-    <state width="1397" height="300" key="GridCell.Tab.0.bottom" timestamp="1591773173896">
+    <state x="420" y="52" key="#search_for_d/0.0.1440.920@0.0.1440.920" timestamp="1592891478213" />
+    <state x="501" y="215" key="FileChooserDialogImpl" timestamp="1592891595484">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state width="1397" height="300" key="GridCell.Tab.0.bottom/0.0.1440.920@0.0.1440.920" timestamp="1591773173896" />
-    <state width="1397" height="300" key="GridCell.Tab.0.center" timestamp="1591773173896">
+    <state x="501" y="215" key="FileChooserDialogImpl/0.0.1440.920@0.0.1440.920" timestamp="1592891595484" />
+    <state width="1397" height="234" key="GridCell.Tab.0.bottom" timestamp="1592964366969">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state width="1397" height="300" key="GridCell.Tab.0.center/0.0.1440.920@0.0.1440.920" timestamp="1591773173896" />
-    <state width="1397" height="300" key="GridCell.Tab.0.left" timestamp="1591773173895">
+    <state width="1397" height="234" key="GridCell.Tab.0.bottom/0.0.1440.920@0.0.1440.920" timestamp="1592964366969" />
+    <state width="1397" height="234" key="GridCell.Tab.0.center" timestamp="1592964366969">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state width="1397" height="300" key="GridCell.Tab.0.left/0.0.1440.920@0.0.1440.920" timestamp="1591773173895" />
-    <state width="1397" height="300" key="GridCell.Tab.0.right" timestamp="1591773173896">
+    <state width="1397" height="234" key="GridCell.Tab.0.center/0.0.1440.920@0.0.1440.920" timestamp="1592964366969" />
+    <state width="1397" height="234" key="GridCell.Tab.0.left" timestamp="1592964366969">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state width="1397" height="300" key="GridCell.Tab.0.right/0.0.1440.920@0.0.1440.920" timestamp="1591773173896" />
-    <state width="1397" height="300" key="GridCell.Tab.1.bottom" timestamp="1591773173896">
+    <state width="1397" height="234" key="GridCell.Tab.0.left/0.0.1440.920@0.0.1440.920" timestamp="1592964366969" />
+    <state width="1397" height="234" key="GridCell.Tab.0.right" timestamp="1592964366969">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state width="1397" height="300" key="GridCell.Tab.1.bottom/0.0.1440.920@0.0.1440.920" timestamp="1591773173896" />
-    <state width="1397" height="300" key="GridCell.Tab.1.center" timestamp="1591773173896">
+    <state width="1397" height="234" key="GridCell.Tab.0.right/0.0.1440.920@0.0.1440.920" timestamp="1592964366969" />
+    <state width="1397" height="217" key="GridCell.Tab.1.bottom" timestamp="1592964357265">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state width="1397" height="300" key="GridCell.Tab.1.center/0.0.1440.920@0.0.1440.920" timestamp="1591773173896" />
-    <state width="1397" height="300" key="GridCell.Tab.1.left" timestamp="1591773173896">
+    <state width="1397" height="217" key="GridCell.Tab.1.bottom/0.0.1440.920@0.0.1440.920" timestamp="1592964357265" />
+    <state width="1397" height="217" key="GridCell.Tab.1.center" timestamp="1592964357260">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state width="1397" height="300" key="GridCell.Tab.1.left/0.0.1440.920@0.0.1440.920" timestamp="1591773173896" />
-    <state width="1397" height="300" key="GridCell.Tab.1.right" timestamp="1591773173896">
+    <state width="1397" height="217" key="GridCell.Tab.1.center/0.0.1440.920@0.0.1440.920" timestamp="1592964357260" />
+    <state width="1397" height="217" key="GridCell.Tab.1.left" timestamp="1592964357260">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state width="1397" height="300" key="GridCell.Tab.1.right/0.0.1440.920@0.0.1440.920" timestamp="1591773173896" />
+    <state width="1397" height="217" key="GridCell.Tab.1.left/0.0.1440.920@0.0.1440.920" timestamp="1592964357260" />
+    <state width="1397" height="217" key="GridCell.Tab.1.right" timestamp="1592964357265">
+      <screen x="0" y="0" width="1440" height="920" />
+    </state>
+    <state width="1397" height="217" key="GridCell.Tab.1.right/0.0.1440.920@0.0.1440.920" timestamp="1592964357265" />
+    <state x="518" y="374" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1592559129613">
+      <screen x="0" y="0" width="1440" height="920" />
+    </state>
+    <state x="518" y="374" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1440.920@0.0.1440.920" timestamp="1592559129613" />
     <state x="268" y="190" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1591346214108">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
@@ -251,10 +309,14 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Exercises$search_for_d.coverage" NAME="search_for_d Coverage Results" MODIFIED="1592891358960" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/traversal" />
+    <SUITE FILE_PATH="coverage/Exercises$main.coverage" NAME="main Coverage Results" MODIFIED="1592964361680" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/classic_lkh_zy/tsp_lkh" />
     <SUITE FILE_PATH="coverage/python_work$prim.coverage" NAME="prim Coverage Results" MODIFIED="1591756151771" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/traversal" />
     <SUITE FILE_PATH="coverage/python_work$alpha_nearness.coverage" NAME="alpha_nearness Coverage Results" MODIFIED="1591770570730" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/traversal" />
     <SUITE FILE_PATH="coverage/python_work$dijkstra.coverage" NAME="dijkstra Coverage Results" MODIFIED="1591234371855" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Exercises$test.coverage" NAME="test Coverage Results" MODIFIED="1592891433998" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python_work$test.coverage" NAME="test Coverage Results" MODIFIED="1591582106113" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python_work$mst_prim.coverage" NAME="mst_prim Coverage Results" MODIFIED="1591582111956" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/traversal" />
+    <SUITE FILE_PATH="coverage/Exercises$tour.coverage" NAME="tour Coverage Results" MODIFIED="1592466055923" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/classic_lkh_zy/tsp_lkh" />
   </component>
 </project>

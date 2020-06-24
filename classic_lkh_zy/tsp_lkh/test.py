@@ -2,8 +2,8 @@ import json
 import collections
 from operator import itemgetter
 import numpy as np
-from traversal.prim import CompleteGraph
-from traversal.search_for_d import best_pi, alpha_nearness, weighted_total_weight, update_graph_weight, build_m1t
+from prim import CompleteGraph
+from search_for_d import best_pi, alpha_nearness, weighted_total_weight, update_graph_weight, build_m1t
 
 with open('20190101010101-001-Stations.json', 'r', encoding='utf-8') as f:
     stations = json.loads(f.read())
@@ -38,10 +38,10 @@ for i in range(len(nodes)):
 graph1 = CompleteGraph(distance_mat)
 pi0 = [0 for _ in range(graph1.n)]
 list_w = best_pi(graph1)
-print(list_w)
-print(weighted_total_weight(graph1, pi0))
+# print(list_w)
+# print(weighted_total_weight(graph1, pi0))
 # print(alpha_nearness(graph1))
-print(weighted_total_weight(graph1, list_w))
+# print(weighted_total_weight(graph1, list_w))
 # print(alpha_nearness(update_graph_weight(graph1, list_w)))
 
 '''

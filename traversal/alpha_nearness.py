@@ -24,9 +24,6 @@ def mst_prim(g, source):
     return tree
 
 
-test_g = CompleteGraph.build_random_complete_graph(5)
-
-
 # build a M1T with nodes {1, 2, ..., n-1}
 def build_m1t_prim(graph):
     vertices = [PrimVertex(id=i, key=np.inf) for i in range(graph.n - 1)]
@@ -72,10 +69,6 @@ def beta(tree):
             value = max(beta_value[tree[i].id][tree[j].parent], test_g.e_weight(tree[j].id, tree[j].parent))
             beta_value[tree[i].id][tree[j].id] = beta_value[tree[j].id][tree[i].id] = value
     return beta_value
-
-
-print('beta = ')
-print(beta(build_mst_prim(test_g)[1]))
 
 
 def alpha_nearness(vertices, graph):

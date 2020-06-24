@@ -22,24 +22,25 @@ def weighted_total_weight(graph, pi):
     return [w, result[1]]
 
 
-def build_m1t(graph):
+def build_m1t(graph):  # O(n^2)
     # build minimum 1-tree without assigning the special node from new_g
-    # length of minimum 1-tree, degree of each node
-    vertices = [PrimVertex(id=i, key=np.inf) for i in range(graph.n)]
+    # calculate length of minimum 1-tree, degree of each node
+    vertices = [PrimVertex(id=i, key=np.inf) for i in range(graph.n)]  # O(n)
+    # initial node: 0
     vertices[0].key = 0
     # each node has a parent except node 0
-    degree = [1 for _ in range(graph.n)]
+    degree = [1 for _ in range(graph.n)]  # O(n)
     degree[0] = 0
     q = list(vertices)
     tree = []
-    while len(q) > 0:
+    while len(q) > 0:  # O(n^2)
         ix, v0 = min(enumerate(q), key=itemgetter(1))
         del q[ix]
         v0.known = True
         tree.append(v0)
         if v0 != vertices[0]:
             degree[v0.parent] += 1
-        for v_id in graph.adj(v0.id):
+        for v_id in graph.adj(v0.id):  # O(n)
             v = vertices[v_id]
             w0 = graph.e_weight(v0.id, v.id)
             if not v.known and w0 < v.key:
@@ -86,12 +87,12 @@ def build_mst(graph):
 
 # beta_value: the length of the edge to be removed from the spanning tree when edge (i, j) is added
 # then alpha(i, j) = e(i, j) - beta(i, j)
-def beta(graph):
-    tree = build_m1t(graph)[3]
+def beta(graph):  # O(n^2)
+    tree = build_m1t(graph)[3]  # O(n^2)
     special_node = build_m1t(graph)[4]
     n = len(tree)
     beta_value = np.zeros((n, n))
-    for i in range(n):
+    for i in range(n): # O(n^2)
         if tree[i].id != special_node:
             for j in range(i+1, n):
                 if tree[j].id != special_node:
@@ -100,12 +101,13 @@ def beta(graph):
     return beta_value
 
 
-def alpha_nearness(graph):
+def alpha_nearness(graph):  # O(n^2)
     n = graph.n
-    special_node = build_m1t(graph)[2]
+    special_node = build_m1t(graph)[2]  # O(n^2)
     vertices = build_m1t(graph)[4]
     alpha = np.zeros((n, n))
-    for i in range(n):
+    beta_value = beta(graph)  # O(n^2)
+    for i in range(n):  # O(n^2)
         for j in range(i+1, n):
             if i == special_node or j == special_node:
                 list_n = sorted(graph.adj_mat[special_node])
@@ -113,7 +115,7 @@ def alpha_nearness(graph):
             elif i == vertices[j].parent or j == vertices[i].parent:
                 alpha[i][j] = alpha[j][i] = 0
             else:
-                alpha[i][j] = alpha[j][i] = graph.e_weight(i, j) - beta(graph)[i][j]
+                alpha[i][j] = alpha[j][i] = graph.e_weight(i, j) - beta_value[i][j]
     return alpha
 
 
