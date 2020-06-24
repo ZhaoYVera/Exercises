@@ -19,13 +19,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0eb8ac45-fa74-4d2c-8afb-94e08a0648ca" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/dfs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="0eb8ac45-fa74-4d2c-8afb-94e08a0648ca" name="Default Changelist" comment="Lin-Kernighan-Held algorithm: break_vs as sequential nodes.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/traversal/alpha_nearness.py" beforeDir="false" afterPath="$PROJECT_DIR$/traversal/alpha_nearness.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/traversal/search_for_d.py" beforeDir="false" afterPath="$PROJECT_DIR$/traversal/search_for_d.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/traversal/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/traversal/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -205,8 +200,16 @@
       <workItem from="1591352555531" duration="228000" />
       <workItem from="1591578827297" duration="27705000" />
       <workItem from="1591773192099" duration="313000" />
-      <workItem from="1592460451298" duration="64477000" />
+      <workItem from="1592460451298" duration="65042000" />
     </task>
+    <task id="LOCAL-00001" summary="Lin-Kernighan-Held algorithm: break_vs as sequential nodes.">
+      <created>1592968335609</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1592968335609</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -222,6 +225,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Lin-Kernighan-Held algorithm: break_vs as sequential nodes." />
+    <option name="LAST_COMMIT_MESSAGE" value="Lin-Kernighan-Held algorithm: break_vs as sequential nodes." />
   </component>
   <component name="WindowStateProjectService">
     <state x="175" y="115" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1591234385611">
