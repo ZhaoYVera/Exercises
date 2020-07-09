@@ -21,6 +21,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0eb8ac45-fa74-4d2c-8afb-94e08a0648ca" name="Default Changelist" comment="Lin-Kernighan-Held algorithm: break_vs as sequential nodes.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classic_lkh_zy/tsp_lkh/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/classic_lkh_zy/tsp_lkh/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +48,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/classic_lkh_zy/tsp_lkh/test.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../tsp_lkh" />
   </component>
   <component name="RunManager" selected="Python.main">
     <configuration name="alpha_nearness" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -200,7 +201,7 @@
       <workItem from="1591352555531" duration="228000" />
       <workItem from="1591578827297" duration="27705000" />
       <workItem from="1591773192099" duration="313000" />
-      <workItem from="1592460451298" duration="65042000" />
+      <workItem from="1592460451298" duration="66918000" />
     </task>
     <task id="LOCAL-00001" summary="Lin-Kernighan-Held algorithm: break_vs as sequential nodes.">
       <created>1592968335609</created>
@@ -209,7 +210,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592968335609</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Lin-Kernighan-Held algorithm: break_vs as sequential nodes.">
+      <created>1592976554529</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1592976554529</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -243,42 +251,46 @@
       <screen x="0" y="0" width="1440" height="920" />
     </state>
     <state x="420" y="52" key="#search_for_d/0.0.1440.920@0.0.1440.920" timestamp="1592891478213" />
-    <state x="501" y="215" key="FileChooserDialogImpl" timestamp="1592891595484">
+    <state x="501" y="215" key="FileChooserDialogImpl" timestamp="1592978171317">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state x="501" y="215" key="FileChooserDialogImpl/0.0.1440.920@0.0.1440.920" timestamp="1592891595484" />
-    <state width="1397" height="234" key="GridCell.Tab.0.bottom" timestamp="1592964366969">
+    <state x="501" y="215" key="FileChooserDialogImpl/0.0.1440.920@0.0.1440.920" timestamp="1592978171317" />
+    <state width="1397" height="217" key="GridCell.Tab.0.bottom" timestamp="1592978402207">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state width="1397" height="234" key="GridCell.Tab.0.bottom/0.0.1440.920@0.0.1440.920" timestamp="1592964366969" />
-    <state width="1397" height="234" key="GridCell.Tab.0.center" timestamp="1592964366969">
+    <state width="1397" height="217" key="GridCell.Tab.0.bottom/0.0.1440.920@0.0.1440.920" timestamp="1592978402207" />
+    <state width="1397" height="217" key="GridCell.Tab.0.center" timestamp="1592978402206">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state width="1397" height="234" key="GridCell.Tab.0.center/0.0.1440.920@0.0.1440.920" timestamp="1592964366969" />
-    <state width="1397" height="234" key="GridCell.Tab.0.left" timestamp="1592964366969">
+    <state width="1397" height="217" key="GridCell.Tab.0.center/0.0.1440.920@0.0.1440.920" timestamp="1592978402206" />
+    <state width="1397" height="217" key="GridCell.Tab.0.left" timestamp="1592978402206">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state width="1397" height="234" key="GridCell.Tab.0.left/0.0.1440.920@0.0.1440.920" timestamp="1592964366969" />
-    <state width="1397" height="234" key="GridCell.Tab.0.right" timestamp="1592964366969">
+    <state width="1397" height="217" key="GridCell.Tab.0.left/0.0.1440.920@0.0.1440.920" timestamp="1592978402206" />
+    <state width="1397" height="217" key="GridCell.Tab.0.right" timestamp="1592978402206">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state width="1397" height="234" key="GridCell.Tab.0.right/0.0.1440.920@0.0.1440.920" timestamp="1592964366969" />
-    <state width="1397" height="217" key="GridCell.Tab.1.bottom" timestamp="1592964357265">
+    <state width="1397" height="217" key="GridCell.Tab.0.right/0.0.1440.920@0.0.1440.920" timestamp="1592978402206" />
+    <state width="1397" height="217" key="GridCell.Tab.1.bottom" timestamp="1592978402209">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state width="1397" height="217" key="GridCell.Tab.1.bottom/0.0.1440.920@0.0.1440.920" timestamp="1592964357265" />
-    <state width="1397" height="217" key="GridCell.Tab.1.center" timestamp="1592964357260">
+    <state width="1397" height="217" key="GridCell.Tab.1.bottom/0.0.1440.920@0.0.1440.920" timestamp="1592978402209" />
+    <state width="1397" height="217" key="GridCell.Tab.1.center" timestamp="1592978402207">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state width="1397" height="217" key="GridCell.Tab.1.center/0.0.1440.920@0.0.1440.920" timestamp="1592964357260" />
-    <state width="1397" height="217" key="GridCell.Tab.1.left" timestamp="1592964357260">
+    <state width="1397" height="217" key="GridCell.Tab.1.center/0.0.1440.920@0.0.1440.920" timestamp="1592978402207" />
+    <state width="1397" height="217" key="GridCell.Tab.1.left" timestamp="1592978402207">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state width="1397" height="217" key="GridCell.Tab.1.left/0.0.1440.920@0.0.1440.920" timestamp="1592964357260" />
-    <state width="1397" height="217" key="GridCell.Tab.1.right" timestamp="1592964357265">
+    <state width="1397" height="217" key="GridCell.Tab.1.left/0.0.1440.920@0.0.1440.920" timestamp="1592978402207" />
+    <state width="1397" height="217" key="GridCell.Tab.1.right" timestamp="1592978402207">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state width="1397" height="217" key="GridCell.Tab.1.right/0.0.1440.920@0.0.1440.920" timestamp="1592964357265" />
+    <state width="1397" height="217" key="GridCell.Tab.1.right/0.0.1440.920@0.0.1440.920" timestamp="1592978402207" />
+    <state x="313" y="194" key="Vcs.Push.Dialog.v2" timestamp="1592977278988">
+      <screen x="0" y="0" width="1440" height="920" />
+    </state>
+    <state x="313" y="194" key="Vcs.Push.Dialog.v2/0.0.1440.920@0.0.1440.920" timestamp="1592977278988" />
     <state x="518" y="374" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1592559129613">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
@@ -287,6 +299,10 @@
       <screen x="0" y="0" width="1440" height="920" />
     </state>
     <state x="268" y="190" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1440.920@0.0.1440.920" timestamp="1591346214108" />
+    <state x="511" y="360" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1592977861805">
+      <screen x="0" y="0" width="1440" height="920" />
+    </state>
+    <state x="511" y="360" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1440.920@0.0.1440.920" timestamp="1592977861805" />
     <state x="383" y="195" width="672" height="678" key="search.everywhere.popup" timestamp="1591256526104">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
