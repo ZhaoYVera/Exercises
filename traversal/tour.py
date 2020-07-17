@@ -1,3 +1,4 @@
+import numpy as np
 
 
 class TourArray:
@@ -9,6 +10,20 @@ class TourArray:
         self.inverse_route = [0, ]*self.size
         for i, k in enumerate(route):
             self.inverse_route[k] = i
+
+    def iter_links(self, include_reverse=True):
+        """return all links in tour"""
+        start = 0
+        curr = start
+        next = curr + 1
+        if include_reverse:
+            while next != self.size:
+                yield self.route[next], self.route[curr]
+                curr, next = next, next + 1
+        else:
+            while next != self.size:
+                yield self.route[curr], self.route[next]
+                curr, next = next, next + 1
 
     def check_feasible(self, v: list, p_2k_2: list):  # O(n) if p_2k_2 empty, O(k) if not
         # Gao lao shi Chao qiang!
@@ -94,3 +109,13 @@ class TourArray:
             self.inverse_route[k] = i
         return
 
+    def route_cost(self, cost: np.array):
+        """return the cost of this tour"""
+        curr = -1
+        next = 0
+        a = 0
+        while next != self.size:
+            a += cost[curr, next]
+            curr += 1
+            next += 1
+        return a
