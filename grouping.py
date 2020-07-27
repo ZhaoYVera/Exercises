@@ -1,17 +1,16 @@
-import math
+from math import ceil
 import numpy as np
-import collections
+from collections import defaultdict
 
 
-class Combination:
+class Grouping:
     def __init__(self, ll, m: int, check_func=None):
-        ll.sort()
         self.n = len(ll)
-        self.ll = ll
+        self.ll = sorted(ll)
         self.max = m
-        self.num_parts = math.ceil(sum(ll)/m)
+        self.num_parts = ceil(sum(ll)/m)
         self.check = check_func
-        self.results = collections.defaultdict(list)
+        self.results = defaultdict(list)
         self.combinations = []
         self.combine()
 
@@ -54,8 +53,14 @@ class Combination:
 
 
 if __name__ == '__main__':
+    n = 0
     def check_feasible(lst, m):
+        global n
+        n += 1
         return sum(lst) <= m
-    r = Combination(list(np.arange(6)+1.5), 13, check_feasible)
+    import random
+    cats = [random.random() for _ in range(9)]
+    r = Grouping(cats, 3, check_feasible)
     for combination in r.combinations:
         print(combination)
+    print(n)
