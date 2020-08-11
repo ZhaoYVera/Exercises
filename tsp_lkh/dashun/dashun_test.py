@@ -116,7 +116,7 @@ for i in results.keys():
         if idx == 'S001':
             xx.append(k)
     xx1 = xx[0]
-    # route = route[xx1:] + route[:xx1]
+    route = route[xx1:] + route[:xx1]
     num_rounds = len(xx)
     rounds = []
     for j in range(num_rounds-1):
@@ -124,8 +124,9 @@ for i in results.keys():
     rounds.append(route[xx[num_rounds-1]:]+route[:xx[0]])
     for round in rounds:
         results_cost_volume[i].append({'cost': tour_cost(round), 'volume': tour_volume(round), 'route': round.copy()})
-
+#
 for i in range(len(results_cost_volume)):
     print(f"For {i+1} rounds:")
     for item in results_cost_volume[str(i+1)]:
         print(item)
+
