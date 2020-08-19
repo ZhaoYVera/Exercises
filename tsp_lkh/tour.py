@@ -20,10 +20,10 @@ class TourArray:
     def iter_links(self, include_reverse=True):
         """return all links in tour"""
         curr = 0
-        while next != self.size:
-            yield self.route[curr], self.route[curr+1]
+        while curr != self.size:
+            yield self.route[curr], self.route[(curr+1) % self.size]
             if include_reverse:
-                yield self.route[curr+1], self.route[curr]
+                yield self.route[(curr+1) % self.size], self.route[curr]
             curr += 1
         # return [(self.route[curr], self.route[curr+1]) for curr in range(self.size-1)]
 
@@ -85,11 +85,16 @@ class TourArray:
     def k_exchange(self, v: list):  # O(n*k^2) ???
         id0 = self.inverse_route[v[0]]
         id1 = self.inverse_route[v[1]]
+        # id0 = self.route.index(v[0])
+        # id1 = self.route.index(v[1])
+        print(f"id0 = {id0}, id1 = {id1}")
         if id0 == id1 + 1 or id1 == id0 + 1:
             initial_index = max(id0, id1)
             tmp_route = self.route[initial_index:] + self.route[:initial_index]  # O(n)
-        else:
+        elif (id0 == 0 and id1 == self.size - 1) or (id0 == self.size - 1 and id1 == 0):
             tmp_route = self.route.copy()
+        else:
+            return
         # cut the tour to get several fragment w.r.t. v
         fragments = []
         first_v_index = 0
@@ -106,8 +111,8 @@ class TourArray:
         # relink the fragments into a new route
         pair2add = {}
         for i in range(len(v) // 2):  # O(k)
-            pair2add[v[2 * i - 1]] = v[2 * i]
-            pair2add[v[2 * i]] = v[2 * i - 1]
+            pair2add[v[2 * i - 1]] = int(v[2 * i])
+            pair2add[v[2 * i]] = int(v[2 * i - 1])
         new_route = []
         first_node = v[-1]
         for _ in range(len(fragments)):  # O(n*k^2)
@@ -125,7 +130,7 @@ class TourArray:
                     break
             first_node = pair2add[last_node]
         self.route = new_route.copy()
-        for i, k in enumerate(new_route):
+        for i, k in enumerate(self.route):
             self.inverse_route[k] = i
         return
 
@@ -209,6 +214,8 @@ class TourDoubleList:
             raise ValueError("Repeat elements in sequential series!")
         if l < 4 or l % 2 != 0:
             raise ValueError("The number of sequential series should be an odd, at least 4!")
+        if self.links[v[0], 0] != v[1] and self.links[v[0], 1] != v[1]:
+            raise ValueError("Actually not feasible!!!")
         cnt = 0
         start = 2
         curr = 2

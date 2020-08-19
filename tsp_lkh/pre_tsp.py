@@ -153,7 +153,7 @@ def dual_ascent(cost_mat, eps=10 ** -6, max_iter=512):
             for _ in range(period):
                 n_iter += 1
                 if n_iter > max_iter:
-                    print(f"Exceed maximum iteration {max_iter}")
+                    # print(f"Exceed maximum iteration {max_iter}")
                     return pi_star, w_star, grad_star
                 w1, grad1 = weighted_total_weight(graph, pi1)
                 if w1 > w0:
@@ -176,7 +176,7 @@ def dual_ascent(cost_mat, eps=10 ** -6, max_iter=512):
                     return pi_star, w_star, grad_star
                 # print(f"Continue period={period}")
                 w0 = w1
-    print(f"Total number of iteration is {n_iter}")
+    # print(f"Total number of iteration is {n_iter}")
     return pi_star, w_star, grad_star
 
 

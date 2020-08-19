@@ -5,7 +5,8 @@ from itertools import permutations
 import numpy as np
 import random
 # from tour import TourDoubleList as Tour
-from tsp_lkh.tour import TourDoubleList as Tour
+# from dashun.tour import TourArray as Tour
+from Exercises.tsp_lkh.tour import TourDoubleList as Tour
 from heapq import nsmallest
 from operator import itemgetter
 from tsp_lkh.pre_tsp import dual_ascent, get_alpha_nearness
@@ -23,10 +24,10 @@ def tour_cost_arr(tour, cost_mat):
 
 
 def read_test_data(cost_file, answer_file):
-    cost_mat = np.load(DATA_DIR + cost_file)
+    cost_mat = np.load(cost_file)
     n = len(cost_mat)
     cost_mat[range(n), range(n)] = np.inf
-    opt_tour = np.load(DATA_DIR + answer_file)
+    opt_tour = np.load(answer_file)
     return cost_mat, opt_tour
 
 
@@ -327,29 +328,39 @@ if __name__ == '__main__':
     import pandas as pd
     from time import perf_counter
 
-    result_df = pd.DataFrame()
-    result_dict = {
-        # (False, False): {'time': Averager(), 'value': 999999},
-        (True, False): {'time': Averager(), 'value': 999999},
-        (False, True): {'time': Averager(), 'value': 999999},
-        (True, True): {'time': Averager(), 'value': 999999}}
-
-    for i in range(5):
-        print(f"The {i}th trial begins")
-        for (use_dual_ascent, use_alpha_cand), inner_dict in result_dict.items():
-            print(f"use dual ascent is {use_dual_ascent}, use alpha is {use_alpha_cand}")
-            t0 = perf_counter()
-            lkh_solver = LKH(cost_mat, use_dual_ascent=use_dual_ascent, use_alpha_cand=use_alpha_cand, max_depth=10)
-            tour0 = lkh_solver.create_initial_tour(sd=i)
-            print(f"The initial cost is {tour0.route_cost(cost_mat)}")
-            tour_star = lkh_solver.run(tour0)
-            elapsed = perf_counter() - t0
-            print(f"The final cost is {tour_star.route_cost(cost_mat)}")
-            inner_dict['time'].add_new(elapsed)
-            inner_dict['value'] = min(inner_dict['value'], tour_star.route_cost(cost_mat))
-
-        print(result_dict)
-    lkh_solver = LKH(cost_mat)
-    # tour0 = Tour(list(range(130)))
-    # lkh_solver.run(tour0)
-
+    # result_df = pd.DataFrame()
+    # result_dict = {
+    #     (False, False): {'time': Averager(), 'value': 999999},
+    #     (True, False): {'time': Averager(), 'value': 999999},
+    #     (False, True): {'time': Averager(), 'value': 999999},
+    #     (True, True): {'time': Averager(), 'value': 999999}}
+    #
+    # for i in range(5):
+    #     print(f"The {i}th trial begins")
+    #     for (use_dual_ascent, use_alpha_cand), inner_dict in result_dict.items():
+    #         print(f"use dual ascent is {use_dual_ascent}, use alpha is {use_alpha_cand}")
+    #         t0 = perf_counter()
+    #         lkh_solver = LKH(cost_mat, use_dual_ascent=use_dual_ascent, use_alpha_cand=use_alpha_cand, max_depth=10)
+    #         tour0 = lkh_solver.create_initial_tour(sd=i)
+    #         print(f"The initial cost is {tour0.route_cost(cost_mat)}")
+    #         tour_star = lkh_solver.run(tour0)
+    #         elapsed = perf_counter() - t0
+    #         print(f"The final cost is {tour_star.route_cost(cost_mat)}")
+    #         inner_dict['time'].add_new(elapsed)
+    #         inner_dict['value'] = min(inner_dict['value'], tour_star.route_cost(cost_mat))
+    #
+    #     print(result_dict)
+    lkh_solver = LKH(cost_mat, use_alpha_cand=False, use_dual_ascent=False)
+    tour0 = Tour(list(range(130)))
+    best_route = lkh_solver.run(tour0)
+    print(list(best_route.iter_vertices()))
+    print(best_route.route_cost(cost_mat))
+    # my_mat = np.array([0., 3, 9, 1, 99, 8,
+    #                    3, 0, 6, 99, 99, 30,
+    #                    9, 6, 0, 99, 99, 99,
+    #                    1, 99, 99, 0, 7, 99,
+    #                    99, 99, 99, 7, 0, 2,
+    #                    8, 30, 99, 99, 2, 0]).reshape((6, 6))
+    # my_test = LKH(my_mat.copy(), use_dual_ascent=False, use_alpha_cand=False, candidate_size=2)
+    # result = my_test.run()
+    # print(result.route)
