@@ -1,41 +1,29 @@
 import json
-from typing import Sequence, List
+from typing import List
 from collections import defaultdict
 import numpy as np
 import math
 import matplotlib.pyplot as plt
 from Exercises.tsp_lkh.main import LKH
-from grouping import Grouping
-# from Exercises.tsp_lkh.bailian.dijkstra_tree import create_init_tree
-
-
-class Node:
-    def __init__(self, name, volume=0, weight=0, time_window=None, lng=None, lat=None, district=None):
-        self.name = name
-        self.volume = volume
-        self.weight = weight
-        self.time_window = time_window
-        self.layer = 0
-        self.parent = None
-        self.children = []
-        self.lng = lng
-        self.lat = lat
-        self.district = district
-
-    def __repr__(self):
-        return self.name
+from Exercises.tsp_lkh.bailian.LP_zhuangmao import cats_in_cars, pin
+from Exercises.tsp_lkh.bailian.node import Node
+# from Exercises.tsp_lkh.bailian.LP_zhuangmao import pin
 
 
 class Tree:
-    def __init__(self, root: Node, rest_nodes: List[Node], time_distance_matrix, time_matrix):
+    def __init__(self, root: Node, rest_nodes: List[Node], time_distance_matrix):
         self.rest_nodes = rest_nodes
         self.root = root
         self.nodes = [root] + rest_nodes
-        self.td_matrix = time_distance_matrix
-        self.time_matrix = time_matrix
-        self.create_init_tree()
+        self.distance_matrix = time_distance_matrix['distance']
+        self.time_distance_matrix = time_distance_matrix
+        self.partition = None
 
     def create_init_tree(self):
+        """
+        create the initial tree by Dijkstra's algorithm.
+        The tree need to be modified before partition.
+        """
         dist = defaultdict(float)
         dist[0] = 0
         for i in range(len(self.rest_nodes)):
@@ -49,22 +37,40 @@ class Tree:
                 adding_node.layer = adding_node.parent.layer + 1
             del rest[adding_node_idx]
             for v in rest.keys():
-                if dist[v] > dist[adding_node_idx] + self.td_matrix[adding_node.name][self.nodes[v].name]:
-                    dist[v] = dist[adding_node_idx] + self.td_matrix[adding_node.name][self.nodes[v].name]
+                if dist[v] > dist[adding_node_idx] + self.distance_matrix[adding_node.name][self.nodes[v].name]:
+                    dist[v] = dist[adding_node_idx] + self.distance_matrix[adding_node.name][self.nodes[v].name]
                     self.nodes[v].parent = adding_node
                     rest[v] = dist[v]
         return self.nodes
 
+    def create_init_mst(self):
+        """
+        create the initial tree as MST by Prim's algorithm.
+        no additional operations are required before partition.
+        """
+        q = self.nodes.copy()
+        self.root.key = 0
+        while q:
+            idx, u = min(enumerate(q), key=lambda x: x[1].key)
+            del q[idx]
+            for v in q:
+                if self.distance_matrix[u.name][v.name] < v.key:
+                    v.parent = u
+                    v.key = self.distance_matrix[u.name][v.name]
+        for node in self.rest_nodes:
+            node.parent.children.append(node)
+        return
+
     @staticmethod
-    def get_branch(subtree_root: Node):
-        subtree_list = [subtree_root]
+    def get_branch(branch_root: Node):
+        subtree_list = [branch_root]
 
         def get_children(node: Node):
             if node.children:
                 subtree_list.extend(node.children)
                 for child_node in node.children:
                     get_children(child_node)
-        get_children(subtree_root)
+        get_children(branch_root)
         return subtree_list
 
     def get_leaves(self):
@@ -73,6 +79,18 @@ class Tree:
             if not node.children:
                 leaves.append(node)
         return leaves
+
+    def get_proper_td_matrix(self, branch, factor='distance'):
+        """
+        get proper cost matrix for LKH & calculating route cost.
+        """
+        vertices = [self.root] + branch
+        n = len(vertices)
+        mat = np.zeros((n, n))
+        for i in range(n):
+            for j in range(i + 1, n):
+                mat[i][j] = mat[j][i] = self.time_distance_matrix[factor][vertices[i].name][vertices[j].name]
+        return mat
 
     def sum_volume(self, branch_root):
         branch = self.get_branch(branch_root)
@@ -86,7 +104,7 @@ class Tree:
         branch = self.get_branch(branch_root)
         length = 0
         for node in branch[1:]:
-            length += self.td_matrix[node.name][node.parent.name]
+            length += self.distance_matrix[node.name][node.parent.name]
         return length
 
     @staticmethod
@@ -106,7 +124,7 @@ class Tree:
         change_layer(branch_root)
         return
 
-    def iter_root2leaf(self):
+    def plot_tree(self):
         results = []
 
         def dfs_route(curr_route, sub_node: Node):
@@ -114,19 +132,32 @@ class Tree:
                 results.append(curr_route.copy())
                 return
             for child in sub_node.children:
-                dfs_route(curr_route+[child], child)
+                dfs_route(curr_route + [child], child)
 
         dfs_route([self.root], self.root)
-        return results
-
-    def plot_tree(self):
-        for route in self.iter_root2leaf():
+        for route in results:
             plt.plot([node.lng for node in route], [node.lat for node in route], '+-')
         plt.show()
 
+    def plot_routes(self):
+        lucky = 3
+        partition = self.run() if self.partition is None else self.partition
+        for part in partition:
+            start_part = [self.root] + part
+            xx = []
+            yy = []
+            route = LKH(self.get_proper_td_matrix(part), use_dual_ascent=False, use_alpha_cand=False).run()
+            for idx in route.iter_vertices():
+                xx.append(start_part[idx].lng)
+                yy.append(start_part[idx].lat)
+            xx.append(self.root.lng)
+            yy.append(self.root.lat)
+            plt.plot(xx, yy, '+-')
+        plt.show()
+
     def grade(self, node: Node):
-        min_dist = min(self.td_matrix[node.name][other.name] for other in self.nodes if other != node)
-        dist2parent = self.td_matrix[node.name][node.parent.name]
+        min_dist = min(self.distance_matrix[node.name][other.name] for other in self.nodes if other != node)
+        dist2parent = self.distance_matrix[node.name][node.parent.name]
         score = min_dist - dist2parent
         return score
 
@@ -135,11 +166,14 @@ class Tree:
         for node in nodes:
             branch_size = len(self.get_branch(node))
             sum_volume = self.sum_volume(node)
-            sum_distance = self.length_branch(node) + self.td_matrix[self.root.name][node.name]
+            sum_distance = self.length_branch(node) + self.distance_matrix[self.root.name][node.name]
             candidate_nodes = self.rest_nodes.copy()
             for sub_node in self.get_branch(node):
                 candidate_nodes.remove(sub_node)
-            min_link2other = min(self.td_matrix[node.name][other.name] for other in candidate_nodes)
+            if candidate_nodes:
+                min_link2other = min(self.distance_matrix[node.name][other.name] for other in candidate_nodes)
+            else:
+                min_link2other = self.distance_matrix[node.name][self.root.name]
             score = 1000/abs(truck_size - sum_volume)
             score += math.exp(sum_distance/(branch_size*10000))
             score += math.exp(min_link2other/1000)
@@ -163,13 +197,15 @@ class Tree:
         linking_node_candidate = self.rest_nodes.copy()
         for node in self.get_branch(cutting_node):
             linking_node_candidate.remove(node)
-        linking_node_idx = min(enumerate(self.td_matrix[cutting_node.name][other.name]
+        linking_node_idx = min(enumerate(self.distance_matrix[cutting_node.name][other.name]
                                          for other in linking_node_candidate),
                                key=lambda x: x[1])[0]
         self.cut_relink(cutting_node, linking_node_candidate[linking_node_idx])
         return
 
-    def merge(self, final_branch_num=6):
+    def merge(self, final_branch_num=None, truck_size=12):
+        if final_branch_num is None:
+            final_branch_num = math.ceil(sum(node.volume for node in self.rest_nodes)/truck_size)
         layer1_num = len(self.get_layer_nodes(1))
         while layer1_num > final_branch_num:
             cutting_node = self.get_layer_nodes(1)[0]
@@ -180,182 +216,245 @@ class Tree:
     def merge_leaves(self):
         leaves = self.get_leaves()
         leaves.sort(key=self.grade)
-        # mean_length = sum(self.td_matrix[leaf.name][leaf.parent.name] for leaf in leaves)/len(leaves)
+        # mean_length = sum(self.distance_matrix[leaf.name][leaf.parent.name] for leaf in leaves)/len(leaves)
         for leaf in leaves:
-            # if self.td_matrix[leaf.name][leaf.parent.name] > mean_length:
+            # if self.distance_matrix[leaf.name][leaf.parent.name] > mean_length:
             self.cut_branch(leaf)
         return
 
-    def divide(self, truck_size=12):
-        division = []
+    def divide(self, truck_size=12, preprocess='dij'):
+        if preprocess == 'dij':
+            self.create_init_tree()
+            self.merge()
+            self.merge_leaves()
+        elif preprocess == 'mst':
+            self.create_init_mst()
+        else:
+            raise ValueError("preprocess choices: 'dij', 'mst'.")
+        division_branch_volume = []
         rest = self.rest_nodes.copy()
-        while rest:
-            branch_root = self.get_ranking(rest, truck_size)
-            branch = self.get_branch(branch_root)
-            # branch_root.parent.children.remove(branch_root)
+
+        def cut4overload(waiting_root):
+            scores = []
+            total_volume = self.sum_volume(waiting_root)
             for node in branch:
-                rest.remove(node)
-            if sum(node.volume for node in branch) > truck_size:
-                scores = []
-                for node in branch:
-                    if node != branch_root:
-                        # branch_size = len(self.get_branch(node))
-                        sum_volume = self.sum_volume(node)
-                        # sum_distance = self.length_branch(node) + self.td_matrix[self.root.name][node.name]
-                        # for sub_node in self.get_branch(node):
-                        #     candidate_nodes.remove(sub_node)
-                        min_link2other = min(self.td_matrix[node.name][other.name] for other in rest) if not rest \
-                            else self.td_matrix[self.root.name][node.name]
-                        score = 1000 / (truck_size + sum_volume - self.sum_volume(branch_root))
-                        # score += math.exp(sum_distance / (branch_size * 10000))
-                        score -= math.exp(min_link2other / 10000)
-                        scores.append((score, node))
+                if node != waiting_root:
+                    sum_volume = self.sum_volume(node)
+                    score1 = 1000 / (truck_size + sum_volume - total_volume) \
+                        if (truck_size + sum_volume - total_volume) != 0 else np.inf
+                    min_link2other = min(self.distance_matrix[node.name][other.name] for other in rest) if rest \
+                        else self.distance_matrix[self.root.name][node.name]
+                    score2 = math.exp(min_link2other / 10000)
+                    score = score1 - score2
+                    scores.append((score1, score2, score, node))
+            scores.sort(reverse=True)
+            if scores[0][0] < 0:  # 只剪一枝不够
+                scores.sort(key=lambda x: x[1])
+                cut_node = scores[0][3]
+                if rest:
+                    linking_node_idx = min(enumerate(self.distance_matrix[cut_node.name][other.name]
+                                                     for other in rest),
+                                           key=lambda x: x[1])[0]
+                    self.cut_relink(cut_node, rest[linking_node_idx])
+                    for nnode in self.get_branch(cut_node):
+                        rest.append(nnode)
+                        branch.remove(nnode)
+                else:
+                    self.cut_relink(cut_node, self.root)
+                    for nnode in self.get_branch(cut_node):
+                        rest.append(nnode)
+                        branch.remove(nnode)
+                if sum(mnode.volume for mnode in branch) > truck_size:
+                    return cut4overload(waiting_root)
+            else:
                 scores.sort(reverse=True)
-                cut_node = scores[0][1]
+                cut_node = scores[0][3]
                 if not rest:
                     self.cut_relink(cut_node, self.root)
                 else:
-                    linking_node_idx = min(enumerate(self.td_matrix[cut_node.name][other.name]
+                    linking_node_idx = min(enumerate(self.distance_matrix[cut_node.name][other.name]
                                                      for other in rest),
                                            key=lambda x: x[1])[0]
                     self.cut_relink(cut_node, rest[linking_node_idx])
                 for node in self.get_branch(cut_node):
                     branch.remove(node)
                     rest.append(node)
-            division.append((branch.copy(), sum(node.volume for node in branch)))
+
+        while rest:
+            branch_root = self.get_ranking(rest, truck_size)
+            branch = self.get_branch(branch_root)
+            for node in branch:
+                rest.remove(node)
+            if sum(node.volume for node in branch) > truck_size:  # 超载，进行评分、剪枝
+                cut4overload(branch_root)
+            division_branch_volume.append((branch.copy(), sum(node.volume for node in branch)))
             branch_root.parent.children.remove(branch_root)
-        for branch in division:
+
+        print("DIVIDE RESULT: ")
+        for branch in division_branch_volume:
             print(f"branch_size = {len(branch[0])}, total_volume = {branch[1]}")
-        print(len(division))
-        return division
+        print(f"number of division: {len(division_branch_volume)}")
 
-    def merge_round(self, division, truck_size):
+        return division_branch_volume
 
-        def earning_combine(branch1, branch2):
+    def merge_round(self, division_branch_volume, truck_size):
+        lucky = 3
 
-            def get_proper_mat(branch):
-                start_branch = [self.root] + branch
-                n = len(start_branch)
-                mat = np.zeros((n, n))
-                for i in range(n):
-                    for j in range(i+1, n):
-                        mat[i][j] = mat[j][i] = self.td_matrix[start_branch[i].name][start_branch[j].name]
-                return mat
-            mat1 = get_proper_mat(branch1)
-            mat2 = get_proper_mat(branch2)
-            mat_total = get_proper_mat(branch1+branch2)
-            cost1 = LKH(mat1, use_dual_ascent=False, use_alpha_cand=False).run().route_cost(mat1)
-            cost2 = LKH(mat2, use_dual_ascent=False, use_alpha_cand=False).run().route_cost(mat2)
-            cost_total = LKH(mat_total, use_dual_ascent=False, use_alpha_cand=False).run().route_cost(mat_total)
-
+        def earning_combine(branch1, branch2, factor='distance'):
+            mat1 = self.get_proper_td_matrix(branch1, factor)
+            mat2 = self.get_proper_td_matrix(branch2, factor)
+            mat_total = self.get_proper_td_matrix(branch1+branch2, factor)
+            tour1 = LKH(mat1, use_dual_ascent=False, use_alpha_cand=False)
+            init_tour1 = tour1.create_initial_tour(sd=lucky)
+            cost1 = tour1.run(tour0=init_tour1).route_cost(mat1)
+            tour2 = LKH(mat2, use_dual_ascent=False, use_alpha_cand=False)
+            init_tour2 = tour2.create_initial_tour(sd=lucky)
+            cost2 = tour2.run(tour0=init_tour2).route_cost(mat2)
+            tour_total = LKH(mat_total, use_dual_ascent=False, use_alpha_cand=False)
+            init_tour_total = tour_total.create_initial_tour(sd=lucky)
+            cost_total = tour_total.run(tour0=init_tour_total).route_cost(mat_total)
+            if factor == 'time':
+                cost1 += len(branch1) * 900 + 1800
+                cost2 += len(branch2) * 900 + 1800
+                cost_total += len(branch1 + branch2) * 900 + 1800
             earning = cost_total - cost1 - cost2
             return earning
         ranking = []
-        for branch1 in division:
-            for branch2 in division:
-                if branch1 != branch2:
-                    if branch1[1] + branch2[1] > truck_size:
-                        continue
-                    earning = earning_combine(branch1[0], branch2[0])
-                    if earning < 0:
-                        ranking.append((earning, branch1, branch2))
+        for i in range(len(division_branch_volume)):
+            for j in range(i+1, len(division_branch_volume)):
+                round_volume1 = division_branch_volume[i]
+                round_volume2 = division_branch_volume[j]
+                if round_volume1[1] + round_volume2[1] > truck_size:
+                    continue
+                earning = earning_combine(round_volume1[0], round_volume2[0])
+                if earning > 0:
+                    continue
+                ranking.append((earning, round_volume1, round_volume2))
         ranking.sort(key=lambda x: x[0])
         if ranking:
-            branch1 = ranking[0][1]
-            branch2 = ranking[0][2]
-            division.remove(branch1)
-            division.remove(branch2)
-            new_branch = (branch1[0] + branch2[0], branch1[1] + branch2[1])
-            division.append(new_branch)
-            self.merge_round(division, truck_size)
+            round_volume1 = ranking[0][1]
+            round_volume2 = ranking[0][2]
+            division_branch_volume.remove(round_volume1)
+            division_branch_volume.remove(round_volume2)
+            new_round = (round_volume1[0] + round_volume2[0], round_volume1[1] + round_volume2[1])
+            division_branch_volume.append(new_round)
+            self.merge_round(division_branch_volume, truck_size)
         else:
-            return division
+            return division_branch_volume
 
-    def run(self, truck_size=12):
-        division = self.divide(truck_size)
-        self.merge_round(division, truck_size)
-        for branch in division:
-            print(f"branch_size = {len(branch[0])}, total_volume = {branch[1]}")
-        print(len(division))
-        return division
+    def merge_round_yuqin(self, truck_size=12):
+        division_branch_volume = self.divide()
+        min_volume = min(item[1] for item in division_branch_volume)
+        self.partition = []
+        second_time = []
+        for branch, volume in division_branch_volume:
+            if volume > truck_size - min_volume:
+                self.partition.append(branch)
+            else:
+                second_time.extend(branch)
+        if second_time:
+            for node in second_time:
+                node.parent = None
+                node.children = []
+                node.layer = 0
+            self.root.children = []
+            second_tree = Tree(self.root, second_time, self.time_distance_matrix)
+            self.partition.extend(second_tree.run())
+        return self.partition
 
-    def total_cost(self):
-        division = self.run()
+    def merge_round_yuqin2(self, truck_size=12):
+        division_branch_volume = self.divide()
+        min_volume = min(item[1] for item in division_branch_volume)
+        self.partition = []
+        second_time = []
+        for branch, volume in division_branch_volume:
+            if volume > truck_size - min_volume:
+                self.partition.append(branch)
+            else:
+                second_time.append(Node(name=branch[0].name, volume=sum(node.volume for node in branch), branch_nodes=branch))
+        if second_time:
+            self.root.children = []
+            second_tree = Tree(self.root, second_time, self.time_distance_matrix)
+            result = second_tree.divide()
+            for branch, volume in result:
+                part = []
+                for node in branch:
+                    part.extend(node.branch_nodes)
+                self.partition.append(part)
+        return self.partition
+
+    def merge_lp(self, truck_size=12):
+        division_branch_volume = self.divide()
+        branches = []
+        for branch, _ in division_branch_volume:
+            branches.append(branch)
+        self.partition = pin(truck_size, branches, self.distance_matrix)
+        return self.partition
+
+    def run(self, truck_size=12, preprocess='dij'):
+        division_branch_volume = self.divide(truck_size, preprocess)
+        # self.merge_round(division_branch_volume, truck_size)
+        self.merge_round_yuqin2()
+        # for branch, volume in division_branch_volume:
+        #     print(f"branch_size = {len(branch)}, total_volume = {volume}")
+        # print(f"number of rounds: {len(division_branch_volume)}")
+
+        partition = [branch for branch, volume in division_branch_volume]
+        self.partition = partition
+        return partition
+
+    def total_cost(self, time4pickup=1800, time4deliver=900, truck_size=12, preprocess='dij'):
+        lucky = 3
+        partition = self.run(truck_size, preprocess) if self.partition is None else self.partition
         total_cost = 0
         total_time_cost = 0
-
-        def get_proper_mat(branch):
-            start_branch = [self.root] + branch
-            n = len(start_branch)
-            mat = np.zeros((n, n))
-            for i in range(n):
-                for j in range(i + 1, n):
-                    mat[i][j] = mat[j][i] = self.td_matrix[start_branch[i].name][start_branch[j].name]
-            return mat
-
-        def get_proper_time_mat(branch):
-            start_branch = [self.root] + branch
-            n = len(start_branch)
-            mat = np.zeros((n, n))
-            for i in range(n):
-                for j in range(i + 1, n):
-                    mat[i][j] = mat[j][i] = self.time_matrix[start_branch[i].name][start_branch[j].name]
-            return mat
         result = {}
-        for i in range(len(division)):
-            branch = division[i]
-            dist_mat = get_proper_mat(branch[0])
-            time_mat = get_proper_time_mat(branch[0])
-            route = LKH(dist_mat, use_alpha_cand=False, use_dual_ascent=False).run()
+        for i in range(len(partition)):
+            branch = partition[i]
+            dist_mat = self.get_proper_td_matrix(branch)
+            time_mat = self.get_proper_td_matrix(branch, factor='time')
+            tour = LKH(dist_mat, use_alpha_cand=False, use_dual_ascent=False)
+            init_tour = tour.create_initial_tour(sd=lucky)
+            route = tour.run(tour0=init_tour)
             dist_cost = route.route_cost(dist_mat)
-            time_cost = route.route_cost(time_mat) + len(branch) * 900 + 1800
+            time_cost = route.route_cost(time_mat) + len(branch) * time4deliver + time4pickup
             total_cost += dist_cost
             total_time_cost += time_cost
-            result[i] = {'branch': branch[0], 'total_volume': branch[1], 'distance': dist_cost, 'time': time_cost}
+            result[i] = {'branch': branch, 'total_volume': sum(node.volume for node in branch),
+                         'distance': dist_cost, 'time': time_cost}
 
-            print(f"branch_size = {len(branch[0])}, total_volume = {branch[1]}, distance = {dist_cost}, time = {time_cost}")
-        print(len(division))
+            print(f"branch_size = {len(branch)}, total_volume = {result[i]['total_volume']}, "
+                  f"distance = {dist_cost}, time = {time_cost}, branch: {branch}")
+
+        print(f"total rounds: {len(partition)}")
         print(f"total distance cost: {total_cost}, total time cost: {total_time_cost}")
         return result
 
     def get_truck_num(self, working_time):
         result = self.total_cost()
-        times = []
+        time_list = []
         for item in result.values():
-            times.append(item['time'])
-        truck_num = math.ceil(sum(times)/working_time)
-        times.sort(reverse=True)
+            time_list.append(int(item['time']))
+        truck_num = (sum(time_list) // working_time) + 3
+        last = 0
+        while last == 0:
+            truck_num -= 1
+            solution, last = cats_in_cars([truck_num, 0], [working_time, 0], time_list)
 
-        def grouping(time_list, num):
-            group = []
-            for i in range(num):
-                group.append([0])
-            for tt in time_list:
-                i = 0
-                while True:
-                    if sum(group[i] + [tt]) < working_time:
-                        group[i].append(tt)
-                        break
-                    i += 1
-                    if i == num:
-                        return None
-            return num
-        while True:
-            if grouping(times, truck_num) is None:
-                truck_num += 1
-            break
         return truck_num
 
 
 if __name__ == '__main__':
     with open('orders.json', 'r', encoding='utf-8') as f:
         orders = json.loads(f.read())
-    orders1day = orders['2020-06-02']
+    orders1day = orders['2020-06-01']
     with open('lnglat_district.json', 'r', encoding='utf-8') as f:
         lnglat_dict = json.loads(f.read())
     Nodes = []
     for order in orders1day:
-        if order['id'] != '盛石二店':
+        if order['id'] not in ['盛石二店', '北京配送中心', '大连配送中心', '紫琅店', '全用店', '曹库残次']:  # \
+                # + ['广同店', '昆明店', '双喜店', '广灵店', '霍定店', '景星店', '临青二店', '黄兴店', '延吉一店', '佳龙店', '广一店', '岭南店'] \
+                # + ['延长一店', '延长店', '大华店', '延荣店', '京江店', '和宁店', '芷通店', '广东店', '西江店', '南仓店']:
             lnglat = lnglat_dict[order['id']][0]
             lng, lat = lnglat.split(',')
 
@@ -376,28 +475,19 @@ if __name__ == '__main__':
     root_lnglat = lnglat_dict['起点'][0]
     lng, lat = root_lnglat.split(',')
     my_tree = Tree(root=Node(name='起点', lng=float(lng), lat=float(lat)),
-                   rest_nodes=Nodes, time_distance_matrix=td_dict['distance'], time_matrix=td_dict['time'])
-    my_tree.merge(6)
-    my_tree.merge_leaves()
-    print(f"number of trucks: {my_tree.get_truck_num(46800)}")
+                   rest_nodes=Nodes, time_distance_matrix=td_dict)
+    # my_tree.create_init_tree()
+    # my_tree.merge(5)
+    # my_tree.merge_leaves()
+
+    # my_tree.create_init_mst()
+    # my_tree.plot_tree()
+    # my_tree.divide()
+    # my_tree.run()
+    # my_tree.merge_round_yuqin2()
+    # my_tree.plot_routes()
+    # my_tree.merge_lp()
+    # my_tree.total_cost()
+    # print(f"number of trucks: {my_tree.get_truck_num(64800)}")
 
     # my_tree.plot_tree()
-
-    # node1 = Node(name='a1')
-    # node2 = Node(name='a2')
-    # node3 = Node(name='a3')
-    # node4 = Node(name='a4')
-    # node5 = Node(name='a5')
-    # node1.layer = 0
-    # node2.layer = 1
-    # node3.layer = 1
-    # node4.layer = 2
-    # node5.layer = 2
-    # node2.parent = node1
-    # node3.parent = node1
-    # node4.parent = node2
-    # node5.parent = node2
-    # node1.children = [node2, node3]
-    # node2.children = [node4, node5]
-    # my_tree = Tree([node1, node2, node3, node4, node5])
-    # my_tree.get_branch(node1)
